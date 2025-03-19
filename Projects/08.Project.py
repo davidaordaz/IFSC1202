@@ -1,40 +1,28 @@
-#might need to start over next time 
-# the searchIndex is way off so code is not detecting the correct index of liquor
+with open("TextFiles/constitution.txt", "r") as file:
+    constitutionList = [line.strip() for line in file]
 
+while True:
+    searchTerm = input("\nEnter search term: ").strip()
 
-constitutionFile = open("TextFiles/constitution.txt", "r")
-constitutionList = []
-searchTerm = str(input("Enter Search Term: "))
-searchIndex = 0
-startIndex = 0
-endIndex = 0
+    if searchTerm == "":
+        break  
 
-for line in constitutionFile:
-    constitutionList.append(line)
+    i = 0
+    while i < len(constitutionList):
+        if searchTerm in constitutionList[i]:
+            startIndex = i
+            while startIndex > 0 and constitutionList[startIndex - 1] != "":
+                startIndex -= 1
 
-for i in range(len(constitutionList)):
-    if(searchTerm in constitutionList[i]):
-        searchIndex = i
-        break
+            endIndex = i
+            while endIndex < len(constitutionList) - 1 and constitutionList[endIndex + 1] != "":
+                endIndex += 1
 
-for j in reversed(range((constitutionList[searchIndex]))):
-    if("" in constitutionList[searchIndex - j]):
-        startIndex = j
-        break
+            print()
+            for lineNum in range(startIndex, endIndex + 1):
+                print(f"Line {lineNum + 1}: {constitutionList[lineNum]}")
+            print()  
 
-for h in range((constitutionList[startIndex])):
-    if("" in constitutionList[searchIndex - startIndex + 1]):
-        endIndex = h
-        break
-
-for k in range((constitutionList[startIndex])):
-    if(constitutionList[k] == ""):
-        print("Line", startIndex + k + 1,":", constitutionList[startIndex + k])
-        break
-    else:
-        print("Line", startIndex + k + 1,":", constitutionList[startIndex + k])
-
-
-
-
-constitutionFile.close()
+            i = endIndex + 1
+        else:
+            i += 1
